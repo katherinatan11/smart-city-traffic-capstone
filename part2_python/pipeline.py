@@ -14,10 +14,7 @@ logger = logging.getLogger(__name__)
 # FILE CONFIGURATION
 # ============================================================
 
-CSV_FILENAME = (
-    r"C:\Users\ah_ka\OneDrive\Desktop\AI ML and Data Science"
-    r"\Week 33 CapstoneProject\Metro_Interstate_Traffic_Volume.csv"
-)
+CSV_FILENAME = "Metro_Interstate_Traffic_Volume.csv"
 
 OUTPUT_FILENAME = "cleaned_traffic_data.csv"
 
