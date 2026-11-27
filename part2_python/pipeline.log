@@ -1,0 +1,74 @@
+2026-11-27 19:39:04 [INFO] __main__: ============================================================
+2026-11-27 19:39:04 [INFO] __main__: PART 2 - TASK 1 DATA PIPELINE: STARTING
+2026-11-27 19:39:04 [INFO] __main__: ============================================================
+2026-11-27 19:39:04 [INFO] __main__: Loading raw CSV file.
+2026-11-27 19:39:04 [INFO] __main__: Raw file successfully loaded (48204 rows, 9 columns).
+2026-11-27 19:39:04 [INFO] __main__: Validating schema.
+2026-11-27 19:39:04 [INFO] __main__: Schema validation successful.
+2026-11-27 19:39:04 [INFO] __main__: Standardising categorical values.
+2026-11-27 19:39:04 [WARNING] __main__: Modified 48204 rows during categorical standardisation (whitespace, casing, or missing values).
+2026-11-27 19:39:04 [INFO] __main__: Categorical value standardisation completed.
+2026-11-27 19:39:04 [INFO] __main__: Parsing and validating datetime values.
+2026-11-27 19:39:04 [INFO] __main__: Datetime parsing completed successfully.
+2026-11-27 19:39:04 [WARNING] __main__: Dropped 17 duplicate rows.
+2026-11-27 19:39:04 [INFO] __main__: Checking temperature outliers.
+2026-11-27 19:39:04 [WARNING] __main__: Imputed 10 rows in temp. Reason: Temperature <= 0 Kelvin
+2026-11-27 19:39:04 [INFO] __main__: Checking rainfall outliers.
+2026-11-27 19:39:04 [WARNING] __main__: Imputed 1 rows in rain_1h. Reason: Rainfall outside valid range
+2026-11-27 19:39:04 [INFO] __main__: Checking snowfall outliers.
+2026-11-27 19:39:04 [INFO] __main__: No invalid values detected in snow_1h.
+2026-11-27 19:39:04 [INFO] __main__: Checking cloud cover values.
+2026-11-27 19:39:04 [INFO] __main__: No invalid values detected in clouds_all.
+2026-11-27 19:39:04 [INFO] __main__: Checking traffic volume values.
+2026-11-27 19:39:04 [INFO] __main__: No invalid values detected in traffic_volume.
+2026-11-27 19:39:05 [INFO] __main__: Cleaned dataset saved to cleaned_traffic_data.csv
+2026-11-27 19:39:05 [INFO] __main__: ============================================================
+2026-11-27 19:39:05 [INFO] __main__: PART 2 - TASK 1 DATA PIPELINE: COMPLETED
+2026-11-27 19:39:05 [INFO] __main__: ============================================================
+2026-11-27 19:39:37 [INFO] __main__: ============================================================
+2026-11-27 19:39:37 [INFO] __main__: PART 2 - TASK 2 FEATURE ENGINEERING: STARTING
+2026-11-27 19:39:37 [INFO] __main__: ============================================================
+2026-11-27 19:39:37 [INFO] __main__: Loading cleaned dataset.
+2026-11-27 19:39:37 [INFO] __main__: Dataset shape BEFORE feature engineering: 48187 rows, 10 columns.
+2026-11-27 19:39:37 [INFO] __main__: Creating time-based features.
+2026-11-27 19:39:37 [INFO] __main__: Time feature extraction completed.
+2026-11-27 19:39:37 [INFO] __main__: Encoding weather features.
+2026-11-27 19:39:37 [INFO] __main__: Weather feature engineering completed.
+2026-11-27 19:39:37 [INFO] __main__: Scaling continuous variables.
+2026-11-27 19:39:37 [INFO] __main__: Continuous variable scaling completed.
+2026-11-27 19:39:37 [INFO] __main__: Creating congestion category.
+2026-11-27 19:39:37 [INFO] __main__: Congestion category successfully generated.
+2026-11-27 19:39:37 [INFO] __main__: Dataset shape AFTER feature engineering: 48187 rows, 33 columns.
+2026-11-27 19:39:38 [INFO] __main__: Feature-engineered dataset saved to engineered_traffic_features.csv
+2026-11-27 19:39:38 [INFO] __main__: ============================================================
+2026-11-27 19:39:38 [INFO] __main__: PART 2 - TASK 2 FEATURE ENGINEERING: COMPLETED
+2026-11-27 19:39:38 [INFO] __main__: ============================================================
+2026-11-27 19:40:10 [INFO] __main__: ============================================================
+2026-11-27 19:40:10 [INFO] __main__: PART 2 - TASK 3 VISUALISATIONS: STARTING
+2026-11-27 19:40:10 [INFO] __main__: ============================================================
+2026-11-27 19:40:10 [INFO] __main__: Loading feature-engineered dataset.
+2026-11-27 19:40:10 [INFO] __main__: Dataset loaded successfully (48187 rows, 33 columns).
+2026-11-27 19:40:10 [INFO] __main__: Generating Figure 1: Traffic Demand by Hour
+2026-11-27 19:40:11 [INFO] __main__: Figure saved: traffic_demand_by_hour.png
+2026-11-27 19:40:11 [INFO] __main__: Generating Figure 2: Weekday vs Weekend Traffic
+2026-11-27 19:40:12 [INFO] __main__: Figure saved: weekday_vs_weekend_traffic.png
+2026-11-27 19:40:12 [INFO] __main__: Generating Figure 3: Temperature vs Traffic
+2026-11-27 19:40:14 [INFO] __main__: Figure saved: temperature_vs_traffic.png
+2026-11-27 19:40:14 [INFO] __main__: All visualisations generated successfully.
+2026-11-27 19:40:14 [INFO] __main__: ============================================================
+2026-11-27 19:40:14 [INFO] __main__: PART 2 - TASK 3 VISUALISATIONS: COMPLETED
+2026-11-27 19:40:14 [INFO] __main__: ============================================================
+2026-11-27 19:40:27 [INFO] __main__: ============================================================
+2026-11-27 19:40:27 [INFO] __main__: PART 2 - TASK 4 CLI APPLICATION: STARTING
+2026-11-27 19:40:27 [INFO] __main__: ============================================================
+2026-11-27 19:40:27 [INFO] __main__: Loading feature-engineered dataset.
+2026-11-27 19:40:27 [INFO] __main__: Dataset loaded successfully (48187 rows, 33 columns).
+2026-11-27 19:40:40 [INFO] __main__: Command Invoked: datetime-lookup | target='2017-07-15 16:00:00'
+2026-11-27 19:40:48 [INFO] __main__: Command Invoked: high-traffic | threshold=4000
+2026-11-27 19:40:50 [INFO] __main__: Command Invoked: weekday-weekend-comparison
+2026-11-27 19:40:52 [INFO] __main__: Command Invoked: recommend-travel
+2026-11-27 19:40:59 [INFO] __main__: Command Invoked: weather-lookup | weather='Rain'
+2026-11-27 19:41:01 [INFO] __main__: Command Invoked: exit | Closing application.
+2026-11-27 19:41:01 [INFO] __main__: ============================================================
+2026-11-27 19:41:01 [INFO] __main__: PART 2 - TASK 4 CLI APPLICATION: COMPLETED
+2026-11-27 19:41:01 [INFO] __main__: ============================================================
