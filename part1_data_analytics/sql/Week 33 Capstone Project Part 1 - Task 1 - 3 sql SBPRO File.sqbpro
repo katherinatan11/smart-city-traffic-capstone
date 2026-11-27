@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="Week 33 Capstone Project Part 1 - Task 1 - 3 sql DB File.db" readonly="0" foreign_keys="0" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="pragmas query structure browser" current="1"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1699"/><column_width id="4" width="0"/><expanded_item id="0" parent="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="Metro_Interstate_Traffic_Volume" custom_title="0" dock_id="1" table="4,31:mainMetro_Interstate_Traffic_Volume"/><dock_state state="000000ff00000000fd00000001000000020000083b00000508fc0100000001fb000000160064006f0063006b00420072006f007700730065003101000000000000083b0000015b00ffffff0000083b0000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="Metro_Interstate_Traffic_Volume" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort><column index="8" mode="1"/></sort><column_widths><column index="1" value="101"/><column index="2" value="54"/><column index="3" value="51"/><column index="4" value="59"/><column index="5" value="64"/><column index="6" value="101"/><column index="7" value="257"/><column index="8" value="156"/><column index="9" value="89"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="Task 1: 1.1 SQL-Based Traffic Analysis">--This is a line of comment
+/*
+Created by: Tan Siew Li
+Created: 18 Oct 2026
+Description: This is a query to select all the records from Metro_Interstate_Traffic_Volume TABLE
+*/
+SELECT
+	*
+FROM 
+	Metro_Interstate_Traffic_Volume;</sql><sql name="Task 1: 1.2 Analyse annual traffic trends">--This is a line of comment
+/*
+Created by: Tan Siew Li
+Created: 18 Oct 2026
+Description: This is a query to select all the records from Metro_Interstate_Traffic_Volume TABLE
+*/
+WITH YearlyTraffic AS (
+    SELECT
+        STRFTIME('%Y', date_time) AS Year,
+        SUM(traffic_volume) AS YearlyTotal
+    FROM Metro_Interstate_Traffic_Volume
+    WHERE STRFTIME('%Y', date_time) BETWEEN '2012' AND '2017'
+    GROUP BY STRFTIME('%Y', date_time)
+)
+
+SELECT
+    Year,
+    YearlyTotal,
+    YearlyTotal - LAG(YearlyTotal) OVER (ORDER BY Year) AS ChangeAmount,
+    CASE
+        WHEN YearlyTotal &gt; LAG(YearlyTotal) OVER (ORDER BY Year)
+            THEN 'Increase'
+        WHEN YearlyTotal &lt; LAG(YearlyTotal) OVER (ORDER BY Year)
+            THEN 'Decrease'
+        ELSE 'No Change'
+    END AS Trend
+FROM YearlyTraffic
+ORDER BY Year;</sql><sql name="Task 1: 1.3 Analyse temperature around holidays">WITH HolidayDailyMetrics AS (
+    SELECT
+        -- 1. Categorize into the two holidays
+        CASE 
+            WHEN DATE(date_time) IN ('2015-01-01', '2016-01-01', '2017-01-01') 
+                THEN 'New Year''s Day'
+            WHEN DATE(date_time) IN ('2015-09-07', '2016-09-05', '2017-09-04') 
+                THEN 'Labor Day'
+        END AS holiday_group,
+
+        STRFTIME('%Y', date_time) AS record_year,
+
+        -- Temperature metrics (Kelvin and converted to Celsius for easier interpretation)
+        ROUND(AVG(temp), 2) AS avg_temp_k,
+        ROUND(AVG(temp) - 273.15, 1) AS avg_temp_c,
+        ROUND(MIN(temp) - 273.15, 1) AS min_temp_c,
+        ROUND(MAX(temp) - 273.15, 1) AS max_temp_c,
+
+        -- Traffic volume metrics
+        ROUND(AVG(traffic_volume), 0) AS avg_traffic_volume
+
+    FROM Metro_Interstate_Traffic_Volume
+
+    WHERE DATE(date_time) IN (
+        '2015-01-01', '2016-01-01', '2017-01-01',  -- New Year's Days
+        '2015-09-07', '2016-09-05', '2017-09-04'   -- Labor Days
+    )
+    -- Group by position to avoid table-column alias collisions
+    GROUP BY 1, 2
+)
+
+SELECT
+    holiday_group AS Holiday,
+    record_year AS Year,
+    avg_temp_k AS [Avg Temp (K)],
+    avg_temp_c AS [Avg Temp (°C)],
+    min_temp_c || ' to ' || max_temp_c AS [Temp Range (°C)],
+    avg_traffic_volume AS [Avg Traffic Volume],
+    
+    -- Year-on-Year Temperature Change
+    ROUND(
+        avg_temp_k - LAG(avg_temp_k) OVER (
+            PARTITION BY holiday_group ORDER BY record_year
+        ), 2
+    ) AS [YoY Temp Change (K)],
+
+    -- Year-on-Year Traffic Volume Change
+    ROUND(
+        avg_traffic_volume - LAG(avg_traffic_volume) OVER (
+            PARTITION BY holiday_group ORDER BY record_year
+        ), 0
+    ) AS [YoY Traffic Change]
+
+FROM HolidayDailyMetrics
+ORDER BY Holiday, Year;</sql><sql name="Task 1: 2.1 Traffic volume statistics">WITH OrderedData AS (
+    SELECT
+        traffic_volume,
+        ROW_NUMBER() OVER (ORDER BY traffic_volume) AS rn,
+        COUNT(*) OVER () AS total_rows
+    FROM Metro_Interstate_Traffic_Volume
+),
+MedianCalc AS (
+    SELECT AVG(traffic_volume) AS Median
+    FROM OrderedData
+    WHERE rn IN (
+        (total_rows + 1) / 2,
+        (total_rows + 2) / 2
+    )
+),
+Stats AS (
+    SELECT
+        AVG(traffic_volume) AS Mean,
+        MIN(traffic_volume) AS Minimum,
+        MAX(traffic_volume) AS Maximum,
+        MAX(traffic_volume) - MIN(traffic_volume) AS Range,
+        AVG(
+            (traffic_volume - (
+                SELECT AVG(traffic_volume)
+                FROM Metro_Interstate_Traffic_Volume
+            )) *
+            (traffic_volume - (
+                SELECT AVG(traffic_volume)
+                FROM Metro_Interstate_Traffic_Volume
+            ))
+        ) AS Variance
+    FROM Metro_Interstate_Traffic_Volume
+)
+
+SELECT
+    ROUND(Mean, 2) AS Mean,
+    ROUND((SELECT Median FROM MedianCalc), 2) AS Median,
+    ROUND(Variance, 2) AS Variance,
+    ROUND(SQRT(Variance), 2) AS StandardDeviation,
+    Minimum,
+    Maximum,
+    Range
+FROM Stats;</sql><sql name="Task 1: 2.2 Correlation analysis">WITH Stats AS (
+    SELECT
+        AVG(temp) AS mean_temp,
+        AVG(traffic_volume) AS mean_traffic
+    FROM Metro_Interstate_Traffic_Volume
+)
+
+SELECT
+    ROUND(
+        (
+            SUM(
+                (temp - mean_temp) *
+                (traffic_volume - mean_traffic)
+            )
+        )
+        /
+        SQRT(
+            SUM((temp - mean_temp) * (temp - mean_temp))
+            *
+            SUM((traffic_volume - mean_traffic) * (traffic_volume - mean_traffic))
+        ),
+        4
+    ) AS CorrelationCoefficient
+FROM Metro_Interstate_Traffic_Volume, Stats;</sql><sql name="Task 1: 3.1 Basic probability">SELECT
+    ROUND(
+        SUM(CASE WHEN traffic_volume &gt; 5500 THEN 1 ELSE 0 END) * 1.0
+        / COUNT(*),
+        4
+    ) AS P_Congestion,
+
+    ROUND(
+        SUM(CASE WHEN weather_main = 'Clear' THEN 1 ELSE 0 END) * 1.0
+        / COUNT(*),
+        4
+    ) AS P_ClearWeather,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN traffic_volume &gt; 5500
+                AND weather_main = 'Clear'
+                THEN 1
+                ELSE 0
+            END
+        ) * 1.0
+        / COUNT(*),
+        4
+    ) AS P_Congestion_AND_ClearWeather
+
+FROM Metro_Interstate_Traffic_Volume;</sql><sql name="Task 1: 3.2 Conditional probability">WITH Stats AS (
+    SELECT
+        COUNT(*) AS TotalRecords,
+
+        -- Congestion
+        SUM(CASE WHEN traffic_volume &gt; 5500 THEN 1 ELSE 0 END) AS CongestionCount,
+
+        -- Clear weather
+        SUM(CASE WHEN weather_main = 'Clear' THEN 1 ELSE 0 END) AS ClearCount,
+
+        -- Congestion AND Clear
+        SUM(CASE
+                WHEN traffic_volume &gt; 5500
+                 AND weather_main = 'Clear'
+                THEN 1 ELSE 0
+            END) AS CongestionClearCount,
+
+        -- Congestion AND High Temperature (&gt;292K)
+        SUM(CASE
+                WHEN traffic_volume &gt; 5500
+                 AND temp &gt; 292
+                THEN 1 ELSE 0
+            END) AS CongestionHighTempCount,
+
+        -- Odds Ratio components
+        SUM(CASE
+                WHEN weather_main = 'Clear'
+                 AND traffic_volume &gt; 5500
+                THEN 1 ELSE 0
+            END) AS ClearCongestion,
+
+        SUM(CASE
+                WHEN weather_main = 'Clear'
+                 AND traffic_volume &lt;= 5500
+                THEN 1 ELSE 0
+            END) AS ClearNoCongestion,
+
+        SUM(CASE
+                WHEN weather_main = 'Clouds'
+                 AND traffic_volume &gt; 5500
+                THEN 1 ELSE 0
+            END) AS CloudyCongestion,
+
+        SUM(CASE
+                WHEN weather_main = 'Clouds'
+                 AND traffic_volume &lt;= 5500
+                THEN 1 ELSE 0
+            END) AS CloudyNoCongestion
+
+    FROM Metro_Interstate_Traffic_Volume
+)
+
+SELECT
+
+    -- Conditional Probabilities
+    ROUND(CongestionClearCount * 1.0 / CongestionCount, 4)
+        AS P_ClearWeather_Given_Congestion,
+
+    ROUND(CongestionHighTempCount * 1.0 / CongestionCount, 4)
+        AS P_HighTemperature_Given_Congestion,
+
+    -- Independence Test Values
+    ROUND(CongestionClearCount * 1.0 / TotalRecords, 4)
+        AS P_A_AND_B,
+
+    ROUND(
+        (CongestionCount * 1.0 / TotalRecords) *
+        (ClearCount * 1.0 / TotalRecords),
+        4
+    ) AS P_A_TIMES_B,
+
+    CASE
+        WHEN ABS(
+            (CongestionClearCount * 1.0 / TotalRecords) -
+            (
+                (CongestionCount * 1.0 / TotalRecords) *
+                (ClearCount * 1.0 / TotalRecords)
+            )
+        ) &lt; 0.01
+        THEN 'Approximately Independent'
+        ELSE 'Not Independent'
+    END AS IndependenceTest,
+
+    -- Odds Ratio
+    ROUND(
+        (ClearCongestion * 1.0 / ClearNoCongestion) /
+        (CloudyCongestion * 1.0 / CloudyNoCongestion),
+        4
+    ) AS OddsRatio_Clear_vs_Cloudy
+
+FROM Stats;</sql><current_tab id="6"/></tab_sql></sqlb_project>
