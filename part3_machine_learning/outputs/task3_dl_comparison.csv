@@ -1,0 +1,3 @@
+Model,MAE,R-squared
+PyTorch LSTM,224.18679880039446,0.969004516598224
+Comparable Random Forest (Explainability Surrogate),162.13939516367867,0.9824263830746516
