@@ -1,0 +1,6 @@
+run_name,run_id,task_type,algorithm,C,class_weight,max_iter,n_features,test_size,accuracy,precision,recall,f1_score,roc_auc,n_estimators,max_depth,mae,r2_score
+clf_logistic_regression_C1,373a5ef5a69f4ebf81b0fb45d64e6a3e,classification,LogisticRegression,1.0,balanced,1000.0,30,0.2,0.9565262502593899,0.8247515808491418,0.9833064081852451,0.8970768852861705,0.9917376025455045,,,,
+clf_random_forest_50_d10,85f73a947ada4ebebe7c5f3109d96a24,classification,RandomForestClassifier,,balanced,,30,0.2,0.9753060800996057,0.8939172749391727,0.9892299407646742,0.939161554192229,0.9965293515257503,50.0,10.0,,
+clf_random_forest_100_d20,6e1dca58a8004df7a509cc499bbd47b8,classification,RandomForestClassifier,,balanced,,30,0.2,0.9819464619215605,0.9295558958652373,0.9806138933764136,0.9544025157232704,0.9982018181205381,100.0,20.0,,
+reg_linear_regression,545ff7b2253d4904b6fc7030da680d64,regression,LinearRegression,,,,30,0.2,,,,,,,,813.3002786452699,0.7265824093892017
+reg_random_forest_50_d12,408536c5edeb45cdbe2cf1e39e3de5e3,regression,RandomForestRegressor,,,,30,0.2,,,,,,50.0,12.0,257.16693934894846,0.949938448505578
