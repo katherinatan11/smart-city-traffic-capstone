@@ -1,0 +1,37 @@
+{
+  "total_features": 30,
+  "numeric": [
+    "temp",
+    "rain_1h",
+    "snow_1h",
+    "clouds_all",
+    "Month",
+    "Hour",
+    "Day_of_Week",
+    "Is_Weekend",
+    "Hour_Sin",
+    "Hour_Cos",
+    "Day_Sin",
+    "Day_Cos",
+    "Weather_Clear",
+    "Weather_Clouds",
+    "Weather_Drizzle",
+    "Weather_Fog",
+    "Weather_Haze",
+    "Weather_Mist",
+    "Weather_Rain",
+    "Weather_Smoke",
+    "Weather_Snow",
+    "Weather_Squall",
+    "Weather_Thunderstorm",
+    "Freezing_Precipitation_Hazard",
+    "Temp_Celsius",
+    "Scaled_Temp",
+    "Normalised_Clouds",
+    "is_holiday"
+  ],
+  "categorical": [
+    "weather_main",
+    "weather_description"
+  ]
+}
