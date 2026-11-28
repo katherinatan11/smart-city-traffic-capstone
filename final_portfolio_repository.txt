@@ -1,0 +1,92 @@
+smart-city-traffic-capstone/
+│
+│
+├── part1_data_analytics/
+│ 	├──Metro_Interstate_Traffic_Volume (Dataset)
+│ 	├── sql/
+│ 		├── Week 33 Capstone Project Part 1 - Task 1 - 3 sql.db
+│ 		└── Week 33 Capstone Project Part 1 - Task 1 - 3 sql.sqbpro
+│ 	├── powerbi/
+│ 		├── Week 33 Capstone Project Part 1 - Task 4.pbix
+│ 	└── statistical_analysis.pdf
+│ 	└── data_analytics_insights_report.pdf
+│
+│
+├── part2_python/
+│ 	├── Metro_Interstate_Traffic_Volume   # Dataset
+│	├── pipeline.py                       # Task 1: Raw data ingestion, validation, and cleaning
+│	├── feature_engineering.py            # Task 2: Temporal, cyclical, weather, and congestion features
+│	├── visualizations.py                 # Task 3: High-resolution exploratory charts (300 DPI)
+│	├── cli_app.py                        # Task 4: Interactive command-line traffic query tool
+│	├── traffic_demand_by_hour.png        # Output Figure 1: 24-hour average traffic profile
+│	├── weekday_vs_weekend_traffic.png    # Output Figure 2: Weekday vs. weekend comparison
+│	├── temperature_vs_traffic.png        # Output Figure 3: Temperature (°C) vs. traffic scatter plot
+│	├── cleaned_traffic_data              # Output csv 
+│	└── engineered_traffic_features       # Output csv
+│	├── pipeline.log                      # Sample execution log across Tasks 1–4
+│	├── report.md                         # Written summary of methodology and key findings
+│	└── README.md                         # Project documentation and setup instructions
+│	├── 3_visualisations.pdf              # short interpretation for 3 visualisations
+│	└── methodology_findings_report.pdf   # summarising your methodology and findings 
+│
+│
+part3_machine_learning/
+├── engineered_traffic_features.csv             # From Part 2
+├── README.md                                   # Project documentation, proxy disclosure & run guide
+├── final_capstone_report.pdf                   # Final Capstone Report
+├── bias_and_fairness_report.pdf                # Task 7: Responsible & Sustainable AI / Fairness audit
+├── pipeline.log                                # Centralised execution log across all tasks
+├── mlflow.db                                   # SQLite MLflow tracking & model registry database
+├── mlruns/                                     # MLflow run metadata and skops model artifacts
+│   ├── model.skops                             # skops model
+├── task0_proxy_label.py                        # Task 0: Documented proxy risk label & class summary
+├── task1_supervised_models.py                  # Task 1: Supervised Classification & Regression + plots
+├── task2_unsupervised_rules.py                 # Task 2: K-Means clustering & FP-Growth association rules
+├── task3_dl_explainability.py                  # Task 3: 2-layer PyTorch LSTM + SHAP/LIME explainability
+├── task4_mlflow_tracking.py                    # Task 4: MLflow experiment tracking & model registry
+├── task5_recommendations.py                    # Task 5: Scenario-based travel recommendation engine
+├── task6_deployment_monitoring.py              # Task 6: FastAPI prediction API & drift monitoring
+├── notebooks/
+│   ├── task0_proxy_label.ipynb                 # Task 0: Documented proxy risk label & class summary
+│   ├── task1_supervised_models.ipynb           # Task 1: Supervised Classification & Regression + plots
+│   ├── task2_unsupervised_rules.ipynb          # Task 2: K-Means clustering & FP-Growth association rules
+│   ├── task3_dl_explainability.ipynb           # Task 3: 2-layer PyTorch LSTM + SHAP/LIME explainability
+│   ├── task4_mlflow_tracking.ipynb             # Task 4: MLflow experiment tracking & model registry
+│   ├── task5_recommendations.ipynb             # Task 5: Scenario-based travel recommendation engine
+│   ├── task6_deployment_monitoring.ipynb       # Task 6: FastAPI prediction API & drift monitoring
+├── outputs/
+│   ├── ml_traffic_accident_proxy.csv           # Task 0 proxy-labeled dataset
+│   ├── proxy_label_summary.csv                 # High-risk vs. low-risk record summary
+│   ├── class_distribution.csv                  # Percentage class distribution
+│   ├── proxy_label_documentation.txt           # Formal proxy target disclosure
+│   ├── classification_results.csv              # Task 1 Logistic Regression vs. Random Forest metrics
+│   ├── regression_results.csv                  # Task 1 Linear Regression vs. Random Forest metrics
+│   ├── logistic_regression_model.pkl           # Serialised baseline classifier
+│   ├── random_forest_classifier.pkl            # Serialised production classifier
+│   ├── linear_regression_model.pkl             # Serialised baseline regressor
+│   ├── random_forest_regressor.pkl             # Serialised production regressor (file size too big cannot be loaded into GitHub)
+│   ├── traffic_recommendations.csv             # Task 2 Inertia & Silhouette scores (k = 2..6)
+│   ├── kmeans_cluster_summary.csv              # Task 2 cluster centroids & plain-language profiles
+│   ├── association_rules.csv                   # Task 2 mined FP-Growth association rules
+│   ├── task3_dl_comparison.csv                 # Task 3 PyTorch LSTM vs. Lagged Random Forest metrics
+│   ├── task3_explainability_importance.csv     # Task 3 SHAP/LIME global feature attribution scores
+│   ├── task4_mlflow_experiment_summary.csv     # Task 4 consolidated MLflow run comparison
+│   └── task5_travel_recommendations.csv        # Task 5 scenario-by-scenario travel advisories
+├── artifacts/
+│   ├── selected_features.json                  # Leakage-free feature schema
+│   ├── model_metadata.json                     # Supervised model metadata summary
+│   ├── task4_features_used.json                # Feature schema logged to MLflow
+│   ├── task3_explainability_notes.txt          # Plain-language SHAP/LIME driver summary
+│   ├── task5_findings.txt                      # Human-readable commuter & logistics advisories
+│   └── task6_mlops_deployment_report.json      # FastAPI TestClient & drift alert simulation output
+└── figures/
+    ├── roc_curves.png                          # Task 1 ROC curve comparison
+    ├── actual_vs_predicted.png                 # Task 1 Random Forest actual vs. predicted scatter
+    ├── regression_model_comparison.png         # Task 1 MAE & R² bar comparison
+    ├── rf_feature_importance.png               # Task 1 Top 15 Random Forest feature importances
+    ├── classification_model_comparison.png     # Task 2 K-Means Elbow & Silhouette diagnostics
+    ├── traffic_clusters.png                    # Task 2 Traffic regime scatter plot
+    └── task3_shap_summary.png                  # Task 3 Top 12 SHAP/LIME demand drivers
+
+└── .gitignore
+
