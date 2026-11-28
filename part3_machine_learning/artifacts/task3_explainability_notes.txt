@@ -1,0 +1,12 @@
+EXPLAINABILITY METHODOLOGICAL JUSTIFICATION
+
+Deep Learning Model: PyTorch LSTM (24-hour lookback window)
+Explainability Method: SHAP (TreeExplainer on Comparable Random Forest)
+
+Rationale:
+Multi-step 3D recurrent sequences (24 time steps x features) in an LSTM are
+difficult to interpret directly because temporal feature attributions span
+across lagged hidden states. In accordance with task guidelines, SHAP/LIME
+attributions were computed on a comparable Random Forest regressor trained on
+the exact same chronological forecast horizon using 1-hour, 2-hour, and 24-hour
+traffic volume lags alongside exogenous time and weather features.
