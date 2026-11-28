@@ -1,0 +1,5 @@
+traffic_cluster,Count,Mean_Hour,Mean_Weather_Severity,Mean_Traffic_Volume,Share_Pct,Interpretation
+0,17210,12.002672864613597,22.286924478926085,5102.694131319001,35.71502687446822,Midday hours with heavy traffic congestion under mild/clear weather conditions.
+1,8351,13.75823254700036,82.21537853168863,4087.288707939169,17.330400315437775,Midday hours with moderate traffic volume under adverse/severe weather conditions.
+2,13642,3.049259639349069,32.36881316718383,878.7650637736402,28.310540187187417,Overnight / early-morning hours with light free-flowing traffic under mild/clear weather conditions.
+3,8984,20.721727515583257,22.251050670897182,2574.887800534283,18.644032622906593,Late evening hours with moderate traffic volume under mild/clear weather conditions.
