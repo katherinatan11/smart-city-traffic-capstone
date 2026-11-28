@@ -1,0 +1,33 @@
+PROXY ACCIDENT-RISK LABEL
+
+IMPORTANT DISCLOSURE
+
+No real accident dataset was used.
+
+The Metro Interstate Traffic Volume dataset
+contains traffic and weather observations
+but does not contain accident outcomes.
+
+A documented proxy accident-risk label
+was generated using:
+
+HIGH CONGESTION
+AND
+(SEVERE WEATHER OR LOW VISIBILITY)
+
+Severe Weather:
+- Rain
+- Snow
+- Thunderstorm
+- Squall
+- Drizzle
+
+Low Visibility:
+- Fog
+- Haze
+- Mist
+- Smoke
+
+Predictions represent elevated
+traffic risk and not actual
+accident probability.
