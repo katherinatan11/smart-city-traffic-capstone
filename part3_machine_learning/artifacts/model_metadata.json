@@ -1,0 +1,14 @@
+{
+    "classification_target": "high_risk",
+    "regression_target": "traffic_volume",
+    "records": 48187,
+    "feature_count": 29,
+    "classification_models": [
+        "Logistic Regression",
+        "Random Forest Classifier"
+    ],
+    "regression_models": [
+        "Linear Regression",
+        "Random Forest Regressor"
+    ]
+}
